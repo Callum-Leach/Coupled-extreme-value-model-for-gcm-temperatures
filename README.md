@@ -13,3 +13,5 @@
 4. Run the DIC model selection mcmc on the real data and store the results as before.
 
 5. (Phil) to look into slab-spike methods.
+
+Methodology
