@@ -14,4 +14,57 @@
 
 5. (Phil) to look into slab-spike methods.
 
-Methodology
+Figure 1 Map
+
+ 
+
+Figure 2 6 x 6 time-series plot of max
+
+    Rows : 6 different regions
+    Columns : 6 different GCMs
+    Panel will have 3 colours (per scenario), and up to line styles (ensemble members)
+
+ 
+
+Figure 3 6 x 6 time-series plot of min
+
+    Following Figure 2
+
+ 
+
+Figure 4 2 x 6 linear regression slopes
+
+    Row 1 = Max
+    Row 2 = Min
+    Columns : 6 different regions
+    Panel will have 6 x-values (GCMs), and coloured dots (per scenario)
+    Analogue of F3 from previous paper
+
+ 
+
+Table 1
+
+    List of the details of the ensembles extracted (this is like existing paper); r1f1...
+
+ 
+
+Appendix / SM
+
+ 
+
+Figure SM1 6 x 6 time-series plot of means
+
+    Following Figure 2
+
+ 
+
+Figure SM2 6 x 6 time-series plot of medians
+
+    Following Figure 2
+
+ 
+
+Figure SM3 2 x 6 linear regression slopes
+
+    Row 1 = Mean
+    Row 2 = Median
