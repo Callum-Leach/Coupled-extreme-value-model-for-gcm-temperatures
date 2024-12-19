@@ -60,7 +60,7 @@ class GevMCMC:
         "QLL": (15, [2, 1, 1]),      # Quadratic Mu, Linear Sgm and Xi
         "QQC": (15, [2, 2, 0]),      # Quadratic Mu and Sgm, constant Xi
         "QQL": (18, [2, 2, 1]),      # Quadratic Mu and Sgm, Linear Xi
-
+        "QQQ": (21, [2, 2, 2]),      # Quadratic MU, Sgm, Xi
         }
 
         if self.param_setup not in config_map:
@@ -104,7 +104,7 @@ class GevMCMC:
             Sgm = Mu.degree*3 + 1
             Xi = 3*(Mu.degree + Sgm.degree) + 2
 
-            So what is the best way forward. We firstly want to iterate over al scenarios.
+            So what is the best way forward. We firstly want to iterate over all scenarios.
             Then look at the degree of each parameter
             """
 
@@ -135,25 +135,57 @@ class GevMCMC:
 
         return Mu, Sgm, Xi
     
+    # def log_likelihood(self, params, time_steps):
+    #     """
+    #     This function calculates the log_likelihood of a generalised extreme value distribution
+
+    #     Input (list, list): params which is a list of estimates for the three gev parameters. time_steps is an array of points from 0,1 which is the length of the data.
+
+    #     Output (float): the log_likelihood of a generalised extreme value distribution with the passed in parameters.
+    #     """
+
+    #     tNll = np.zeros([3, 1])
+
+    #     Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)
+
+    #     for iS in range(3):
+            
+    #         tNll[iS] = -1*np.sum(genextreme.logpdf(self.data.iloc[:, iS], -1*Xi[:, iS], loc=Mu[:, iS], scale=Sgm[:, iS]))
+
+        
+    #     return np.sum(tNll)
+    
     def log_likelihood(self, params, time_steps):
-        """
-        This function calculates the log_likelihood of a generalised extreme value distribution
-
-        Input (list, list): params which is a list of estimates for the three gev parameters. time_steps is an array of points from 0,1 which is the length of the data.
-
-        Output (float): the log_likelihood of a generalised extreme value distribution with the passed in parameters.
-        """
 
         tNll = np.zeros([3, 1])
 
         Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)
 
         for iS in range(3):
-            
-            tNll[iS] = -1*np.sum(genextreme.logpdf(self.data.iloc[:, iS], -1*Xi[:, iS], loc=Mu[:, iS], scale=Sgm[:, iS]))
 
-        
+            x = self.data.iloc[:, iS]
+
+            # Compute the standardized variable (z)
+            z = (x - Mu[:, iS]) / Sgm[:, iS]
+            if np.any(1 + Xi[:, iS] * z <= 0):
+                return np.inf  # Invalid parameters (domain constraint violated)
+
+            # Compute the log-likelihood for GEV
+            if np.abs(Xi[:, iS]).max() < 1e-6:  # Limiting case as xi -> 0 (Gumbel)
+                log_pdf = -np.log(Sgm[:, iS]) - z - np.exp(-z)
+            else:  # General case for xi != 0
+                t = 1 + Xi[:, iS] * z
+                log_pdf = (
+                    -np.log(Sgm[:, iS])
+                    - (1 / Xi[:, iS] + 1) * np.log(t)
+                    - t**(-1 / Xi[:, iS])
+                )
+
+            # Accumulate the negative log-likelihood
+            tNll[iS] = -1 * np.sum(log_pdf)
+
         return np.sum(tNll)
+
     
     def log_prior(self, params, time_steps):
         """

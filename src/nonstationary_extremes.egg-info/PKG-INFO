@@ -1,7 +1,0 @@
-Metadata-Version: 2.1
-Name: nonstationary_extremes
-Version: 0.0.1
-Summary: This is a package for perform MCMC to fit a non-stationary generalised extreme value distribution.
-Requires-Python: >=3.9
-Requires-Dist: numpy
-Requires-Dist: pandas
