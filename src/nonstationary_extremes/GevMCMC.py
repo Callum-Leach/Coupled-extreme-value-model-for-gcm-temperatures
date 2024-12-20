@@ -7,13 +7,6 @@ from scipy.linalg import sqrtm
 
 from scipy.stats import genextreme as gev
 
-"""
-TODO:
-
-- Check that log likelihood ratios are correct with new nll function.
-"""
-
-
 class GevMCMC:
 
     def __init__(self, data, param_setup, verbose=True):
@@ -134,28 +127,15 @@ class GevMCMC:
                 Xi[:, iS] += params[Xi_start + 4 + iS] * (time_steps ** 2)
 
         return Mu, Sgm, Xi
-    
-    # def log_likelihood(self, params, time_steps):
-    #     """
-    #     This function calculates the log_likelihood of a generalised extreme value distribution
-
-    #     Input (list, list): params which is a list of estimates for the three gev parameters. time_steps is an array of points from 0,1 which is the length of the data.
-
-    #     Output (float): the log_likelihood of a generalised extreme value distribution with the passed in parameters.
-    #     """
-
-    #     tNll = np.zeros([3, 1])
-
-    #     Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)
-
-    #     for iS in range(3):
-            
-    #         tNll[iS] = -1*np.sum(genextreme.logpdf(self.data.iloc[:, iS], -1*Xi[:, iS], loc=Mu[:, iS], scale=Sgm[:, iS]))
-
         
-    #     return np.sum(tNll)
-    
     def log_likelihood(self, params, time_steps):
+        """
+        This function calculates the log_likelihood of a generalised extreme value distribution
+
+        Input (list, list): params which is a list of estimates for the three gev parameters. time_steps is an array of points from 0,1 which is the length of the data.
+
+        Output (float): the log_likelihood of a generalised extreme value distribution with the passed in parameters.
+        """
 
         tNll = np.zeros([3, 1])
 
@@ -177,7 +157,7 @@ class GevMCMC:
                 t = 1 + Xi[:, iS] * z
                 log_pdf = (
                     -np.log(Sgm[:, iS])
-                    - (1 / Xi[:, iS] + 1) * np.log(t)
+                    - (1 / Xi[:, iS] + 1) * np.log1p(Xi[:, iS] * z)
                     - t**(-1 / Xi[:, iS])
                 )
 
@@ -213,7 +193,9 @@ class GevMCMC:
         self, params, iteration, beta, total_accepted, samples, burn_in, time_steps
     ):
         # Make sure the total_accepted array has float values
-        accepted_chain = np.array(total_accepted.iloc[max(1, iteration-999):, :], dtype=float)
+        # accepted_chain = np.array(total_accepted.iloc[max(0, iteration-999):, :], dtype=float)
+        accepted_chain = np.array(total_accepted.iloc[max(0, len(total_accepted)-1000):, :], dtype=float)
+
 
         if iteration <= burn_in:
             new_parameters = [param + np.random.normal(0, 1) * 0.1 for param in params]
