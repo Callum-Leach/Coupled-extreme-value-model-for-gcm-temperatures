@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.9.30)  7 JAN 2025 17:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.9.30)  7 JAN 2025 19:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -374,8 +374,11 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip65
 )
+(C:\Users\ygrai\AppData\Local\Programs\MiKTeX\tex/latex/tools\xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
 LaTeX Font Info:    Trying to load font information for OT1+qpl on input line 1
-20.
+23.
 
 (C:\Users\ygrai\AppData\Local\Programs\MiKTeX\tex/latex/tex-gyre\ot1qpl.fd
 File: ot1qpl.fd 2009/09/25 v1.2 font definition file for OT1/qpl
@@ -388,24 +391,24 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 ) (LchEtAl2024-Rejoinder.aux)
 \openout1 = `LchEtAl2024-Rejoinder.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 123.
+LaTeX Font Info:    ... okay on input line 123.
 
 (C:\Users\ygrai\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
@@ -435,18 +438,18 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 120.
+Package hyperref Info: Link coloring OFF on input line 123.
  (LchEtAl2024-Rejoinder.out) (LchEtAl2024-Rejoinder.out)
 \@outlinefile=\write3
 \openout3 = `LchEtAl2024-Rejoinder.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 127
+LaTeX Font Info:    Trying to load font information for U+msa on input line 130
 .
 
 (C:\Users\ygrai\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 127
+LaTeX Font Info:    Trying to load font information for U+msb on input line 130
 .
 
 (C:\Users\ygrai\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
@@ -459,7 +462,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 i/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/tex-gyre/q-rm.enc}]
 
 [2]
-Overfull \hbox (2.2471pt too wide) in paragraph at lines 224--225
+Overfull \hbox (2.2471pt too wide) in paragraph at lines 227--228
 []\OT1/qpl/m/n/10 S4.R2.C3.A1 Thanks. We have mod-i-fied to para-graph as sug-g
 ested. The re-vised para-graph reads XXX:CL:Do it. XXX:PhJ:Check
  []
@@ -467,38 +470,15 @@ ested. The re-vised para-graph reads XXX:CL:Do it. XXX:PhJ:Check
 
 
 [3]
-! Undefined control sequence.
-<recently read> \xspace 
-                        
-l.252 ...have modified the caption to refer to \TA
-                                                   globally, which shows an ...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-<recently read> \xspace 
-                        
-l.252 ...s an increase of 6.23K under scenario \SH
-                                                  . XXX:CL:WriteModifiedCapt...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
 
 [4]
-Overfull \hbox (171.67299pt too wide) in paragraph at lines 276--276
+Overfull \hbox (171.67299pt too wide) in paragraph at lines 281--281
 [][]\OT1/qpl/b/n/14.4 Review sec-tion 6. Have the au-thors clearly em-pha-sized
  the strengths of their study/theory/methods/argument? 
  []
 
 
-Overfull \hbox (143.21864pt too wide) in paragraph at lines 297--297
+Overfull \hbox (143.21864pt too wide) in paragraph at lines 302--302
 [][]\OT1/qpl/b/n/14.4 Review sec-tion 7. Have the au-thors clearly stated the l
 im-i-ta-tions of their study/theory/methods/argument? 
  []
@@ -511,13 +491,11 @@ im-i-ta-tions of their study/theory/methods/argument?
 
 [7]
 
-[8] (LchEtAl2024-Rejoinder.bbl
+[8]
 
-Package natbib Warning: Empty `thebibliography' environment on input line 15.
+[9] (LchEtAl2024-Rejoinder.bbl)
 
-)
-
-[9] (LchEtAl2024-Rejoinder.aux)
+[10] (LchEtAl2024-Rejoinder.aux)
  ***********
 LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-08-30>
@@ -526,13 +504,13 @@ Package rerunfilecheck Info: File `LchEtAl2024-Rejoinder.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 12895 strings out of 473899
- 203297 string characters out of 5726500
- 609358 words of memory out of 5000000
- 35584 multiletter control sequences out of 15000+600000
+ 12941 strings out of 473899
+ 204289 string characters out of 5726500
+ 609810 words of memory out of 5000000
+ 35626 multiletter control sequences out of 15000+600000
  589363 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,6n,79p,1699b,439s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 69i,6n,79p,1699b,440s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/ygrai/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmmi10.pfb><C:/Users/ygrai/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmr10.pfb><C:/Users/ygrai/AppData/Local/Programs/MiKTeX/fonts/type1/pu
@@ -542,9 +520,9 @@ ype1/public/amsfonts/cm/cmsy7.pfb><C:/Users/ygrai/AppData/Local/Programs/MiKTeX
 ms/MiKTeX/fonts/type1/public/tex-gyre/qplb.pfb><C:/Users/ygrai/AppData/Local/Pr
 ograms/MiKTeX/fonts/type1/public/tex-gyre/qplr.pfb><C:/Users/ygrai/AppData/Loca
 l/Programs/MiKTeX/fonts/type1/public/tex-gyre/qplri.pfb>
-Output written on LchEtAl2024-Rejoinder.pdf (9 pages, 266591 bytes).
+Output written on LchEtAl2024-Rejoinder.pdf (10 pages, 278340 bytes).
 PDF statistics:
- 102 PDF objects out of 1000 (max. 8388607)
- 22 named destinations out of 1000 (max. 500000)
+ 109 PDF objects out of 1000 (max. 8388607)
+ 24 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

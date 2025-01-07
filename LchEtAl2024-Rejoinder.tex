@@ -89,11 +89,14 @@
 
 \providecommand{\np}{\vspace{10pt}}
 
+%Shortcuts for climate stuff
+\usepackage{xspace} 
+%
 \providecommand{\RS}{\texttt{rsds}\xspace}
 \providecommand{\WS}{\texttt{sfcWind}\xspace}
 \providecommand{\WM}{\texttt{sfcWindmax}\xspace}
 \providecommand{\TA}{\texttt{tas}\xspace}
-
+%
 \providecommand{\AC}{\texttt{ACCESS-CM2}\xspace}
 \providecommand{\CA}{\texttt{CAMS-CSM1-0}\xspace}
 \providecommand{\CE}{\texttt{CESM2}\xspace}
@@ -101,11 +104,11 @@
 \providecommand{\MR}{\texttt{MRI-ESM2-0}\xspace}
 \providecommand{\No}{\texttt{NorESM2-0-LL}\xspace}
 \providecommand{\UK}{\texttt{UKESM1-0-LL}\xspace}
-
+%
 \providecommand{\SL}{\texttt{SSP126}\xspace}
 \providecommand{\SM}{\texttt{SSP245}\xspace}
 \providecommand{\SH}{\texttt{SSP585}\xspace}
-
+%
 \providecommand{\NA}{{North Atlantic}\xspace}
 \providecommand{\CS}{{Celtic Sea}\xspace}
 
@@ -249,13 +252,15 @@
 
 	\emph{S4.R2.C10 Remark \#18 In the Supplementary Material, the caption for Table SM4 states that “(…) thus we estimate a reduction of 3.16 $ms^{-1}$ in the return value for sfcWind under scenario SSP585.” However, the value of “-3.16” does not appear in the table. I recommend reviewing and specifying the region to which this reduction applies.}
 
-	S4.R2.C10.A1 Thanks. This is an error, from copying captions between figures! We have modified the caption to refer to \TA globally, which shows an increase of 6.23K under scenario \SH. XXX:CL:WriteModifiedCaptionAndPutItHere.
+	S4.R2.C10.A1 Thanks. This is an error, from copying captions between figures! We have modified the caption to refer to \TA globally, which shows an increase of 6.23K under scenario \SH. XXX:CL:WriteModifiedCaptionAndPutItHereInRed.
 
 	\emph{S4.R3.C1 nothing}
 
 	\emph{S4.R4.C1 NO}
 
 	\emph{S4.R5.C1 I believe this paper contains a sufficient number of figures and statistical analyses.}
+	
+	S4.R5.C1.A1 Thanks.
 
 	%Section 5%
 	\section*{Review section 5. If applicable, are the interpretation of results and study conclusions supported by the data?}
@@ -264,7 +269,7 @@
 
 	\emph{S5.R2.C2 Remark \#19 The conclusions are generally well-supported by the data presented in the study. The interpretation of the results is consistent with the findings, and the study’s conclusions align with the key trends and patterns identified through the analysis. The authors effectively highlight the significance of their findings in relation to the broader context of climate change. No major revisions are needed in this section, as the conclusions accurately reflect the results. Overall, the study presents a clear and coherent interpretation that is well-supported by the data. However, to further strengthen the Section “5. Discussion and Conclusions”, the authors may wish to consider the remarks provided throughout this review, which suggest ways to enhance the clarity and robustness of the study’s interpretations and conclusions.}
 
-	S5.R2.C2.A1 XXX
+	S5.R2.C2.A1 We are grateful to the reviewer for a thorough review! Details of changes made in light of R2 review comments are given throughout this document.
 
 	\emph{S5.R3.C1 Yes [X] No [] N/A []}
 
@@ -279,11 +284,11 @@
 
 	\emph{S6.R2.C1 Remark \#20 It would be beneficial to highlight the novel aspect of considering both extremes and spatial means across multiple models and scenarios, as this approach offers a more comprehensive view of climate variability.}
 
-	S6.R2.C1.A1 XXX
+	S6.R2.C1.A1 Thanks. We have added the following text in SXXX of the revised manuscript: XXX:PhJ:DoIt.
 
 	\emph{S6.R2.C2 Remark \#21 I suggest emphasising the contribution of using CMIP6 data to assess long-term trends in extreme values, highlighting how this study differs from those that focus on short-term calibration.}
 
-	S6.R2.C2.A1 XXX
+	S6.R2.C2.A1 Thanks. We have added the following text in SXXX of the revised manuscript: XXX:PhJ:DoIt.
 
 	\emph{S6.R3.C1 yes}
 
@@ -300,11 +305,11 @@
 
 	\emph{S7.R2.C1 Remark \#22 It would be helpful to clearly state that the absence of calibration for future extremes may lead to systematic biases, especially for variables with high spatio-temporal variability.}
 
-	S7.R2.C1.A1 XXX
+	S7.R2.C1.A1 Thanks. We believe that this point has already been made in SXXX (XXX:CL:FindTheSection). Nevertheless, we have added the following text in SXXX for emphasis: \ed{As noted in SXXX, the current study considers the application of uncalibrated CMIP6 output. By focussing on differences in return values over a period of 100 years, we are sure that caibration offsets will not affect our inferences. However, linear and higher order ``gain'' terms in the calibration will typically result in systematic departures from the results given here. However, calibration of GCM outputs to as-yet unseen future conditions is problematic.} XXX:PJ:AddThis.
 
 	\emph{S7.R2.C2 Remark \#23 It would be useful to discuss the potential impact of using annual maxima, as opposed to alternative methods such as peaks-over-threshold, on the robustness of the findings.}
 
-	S7.R2.C2.A1 XXX
+	S7.R2.C2.A1 Thanks. We refer the reviewer to our response S3.R2.C2.A1.
 
 	\emph{S7.R3.C1 yes}
 
@@ -312,144 +317,159 @@
 
 	\emph{S7.R5.C1 There are some limitations of the study that the author could mention in the conclusion section. See the Reviewer Comments to the Author Section.}
 
-	S7.R5.C1.A1 XXX
+	S7.R5.C1.A1 Thanks. We refer the reviewer to our response S10.R5.CXXX.AXXX.
 
 	%Section 8%
 	\section*{Review section 8. Does the manuscript structure, flow or writing need improving (e.g., the addition of subheadings, shortening of text, reorganization of sections, or moving details from one section to another)?}
 
-	\emph{S8.R2.C0 The manuscript is well-organized, and the structure and flow are generally clear and logical. Each section is appropriately defined, and the progression of ideas from one to another is smooth. The use of subheadings aids in navigation, and the presentation of content is cohesive. No significant changes or improvements are needed in terms of structure. Overall, the manuscript is well-structured and effectively communicates the research.}
+	\emph{S8.R2.C1 The manuscript is well-organized, and the structure and flow are generally clear and logical. Each section is appropriately defined, and the progression of ideas from one to another is smooth. The use of subheadings aids in navigation, and the presentation of content is cohesive. No significant changes or improvements are needed in terms of structure. Overall, the manuscript is well-structured and effectively communicates the research.}
+	
+	S8.R2.C1.A1 Thanks.
 
-	\emph{S8.R3.C0 no}
+	\emph{S8.R3.C1 no}
 
-	\emph{S8.R4.C0 NO}
+	\emph{S8.R4.C1 NO}
 
-	\emph{S8.R5.C0 The manuscript is well written.}
+	\emph{S8.R5.C1 The manuscript is well written.}
+
+	S8.R5.C1.A1 Thanks.
 
 	%Section 9%
 	\section*{Review section 9. Could the manuscript benefit from language editing?}
 
-	\emph{S9.R2.C0 No}
+	\emph{S9.R2.C1 No}
 
-	\emph{S9.R3.C0 Yes}
+	\emph{S9.R3.C1 Yes}
 
-	\emph{S9.R4.C0 No}
+	S9.R3.C1.A1 Thanks. We assume that this response may be a typo, seeing that (a) no details of the language improvement are given, and (b) none of the other reviewers have concerns with language.
 
-	\emph{S9.R5.C0 No}
+	\emph{S9.R4.C1 No}
+
+	\emph{S9.R5.C1 No}
 
 	%Section 10%
 	\section*{Review section 10. This field is optional. If you have any additional suggestions beyond those relevant to the questions above, please number and list them here.}
 
 	\emph{S10.R2.C1 Remark \#25 The current submission contains six highlights, whereas the journal specifies a maximum of five bullet points. I recommend combining or removing some of these points to comply with this requirement. Additionally, three of the highlights (1st, 4th and 6th) exceed the 85-character limit, including spaces. I suggest rephrasing them to make them more concise while maintaining their key messages. Finally, in the first highlight, the phrase "We quantify (…)" is written in the first person. It would be more appropriate to use an impersonal structure, such as "Quantification of (...)", for consistency.}
 
-	S10.R2.C1.A1 XXX
+	S10.R2.C1.A1 Highlights. We have reduced the number of highlights to five, and reduced the length of each highlight. We have rephrased the first highlight (although in general we prefer a more ``story-telling'' style). The new highlights are: XXX:PhJ:DoIt.
 
 	\emph{S10.R2.C2 Remark \#26 The abstract provides a clear overview of the purpose of the research, the principal results, and the major conclusions, as required by the journal. It outlines the aim of assessing changes in tail characteristics for wind, solar irradiance, and temperature variables using CMIP6 model outputs. The key methods employed, such as non-stationary extreme value models and non-homogeneous Gaussian regression, are well described. Additionally, the abstract highlights the main findings, including the weak evidence for changes in wind extremes and the stronger evidence for changes in solar irradiance and temperature. However, the current abstract exceeds the journal's word limit of 200 words. I recommend revising it to ensure conciseness while retaining the essential information on the study's purpose, methods, key results, and conclusions.}
-
-	S10.R2.C2.A1 XXX
+	
+	S10.R2.C2.A1 We have reduced the length of the abstract as requested. The revised abstract reads: XXX:PhJ:DoIt.
 
 	\emph{S10.R2.C3 Remark \#27 The manuscript includes nine keywords, which exceeds the journal's specified limit of seven. I recommend reducing the number of keywords to comply with the journal's guidelines. Additionally, the final keyword ends with a semicolon (";"), which should be removed to align with proper formatting. Please revise the keywords accordingly.}
 
-	S10.R2.C3.A1 XXX
+	S10.R2.C3.A1 We have reduced the number of keywords to seven as requested. The revised keywords are: XXX:PhJ:DoIt.
 
 	\emph{S10.R2.C4 Remark \#28 I have identified a typo in Section "1. Introduction". In the second sentence of the 1st paragraph (page 1 of the manuscript), the phrase "(…) that global mean sea level has increases (…)" should be corrected to "(…) that global mean sea level has increased (…)."}
 
-	S10.R2.C4.A1 XXX
+	S10.R2.C4.A1 Thanks. We have changed ``increases'' to \ed{increased}.
 
 	\emph{S10.R2.C5 Remark \#29 I have identified a typo in Section "2.1. Compilation of spatial summaries: global and climate zone data". In the fifth sentence of the 3rd paragraph (page 4 of the manuscript), the phrase "(…) this figure also provides illustrations of generally reducing trends in global annual maximum rsds, and increasing trends in global annuam minimum of tas." should be corrected to "(…) and increasing trends in global annual minimum of tas."}
 
-	S10.R2.C5.A1 XXX
+	S10.R2.C5.A1 Thanks. We have changed ``annuam'' to \ed{annual}.
 
 	\emph{S10.R2.C6 Remark \#30 I have identified a typo in Section "2.2. North Atlantic and Celtic Sea data". In the first sentence of the 2nd paragraph (page 7 of the manuscript), where it states "(…) and given in Figures SM19-20." it should be "(…) are given in Figures SM19-20." Kindly confirm.}
 
-	S10.R2.C6.A1 XXX
+	S10.R2.C6.A1 Thanks. We have changed ``and'' to \ed{are}.
 
 	\emph{S10.R3.C0 In this paper, the effects of climate change on extreme climate variables are studied, focusing on the changing trends of short-wave radiation (rsds), near-surface wind speed (sfcWind), maximum daily wind speed (SFCwind Max) and near-surface air temperature (tas). The output of several global coupled climate models (GCMs) and a variety of different climate scenarios (SSP126, SSP245, SSP585) were statistically quantified. The non-stationary generalized extreme value regression model (GEVR) and non-homogeneous Gaussian regression model (NHGR) were used to evaluate the extreme value and annual mean change of climate variables, respectively. At the same time, Markov chain Monte Carlo method (MCMC) was used to quantify the model uncertainty. This paper is innovative in that it uses seven climate models and multiple climate variables to comprehensively assess the impact on extreme climate. This comprehensive multi-model and multi-variable analysis method improves the breadth and comparability of the research, especially in the quantification of extreme value distribution. In addition, non-stationary generalized extreme value regression (GEVR) and non-uniform Gaussian regression (NHGR) models are used to analyze the changes of extreme value and mean value, and the Bayesian method is combined to estimate the changes of extreme value in 100 years, which improves the reliability of the results to a certain extent. However, there are still limitations in the article, and it is suggested to be revised and published:}
 
 	\emph{S10.R3.C1 (1) It has been repeatedly mentioned that there are significant differences in the forecast results between different models, especially in wind speed and extreme value changes. This shows that there are still significant uncertainties when different climate models simulate the same variables. It is recommended that the authors further explore ways to reduce model inconsistencies, such as through model calibration or higher-resolution simulations.}
 
-	S10.R3.C1.A1 XXX
+	S10.R3.C1.A1 We thank the reviewer for these two points. Regarding model calibration, we note that it is not clear whether model calibration would reduce uncertainties in differences in return value; we refer the reviewer to SXXX of the main manuscript, and our response S7.R2.C1.A1, where this point has been discussed. Regarding higher-resolution simulations, we have added the following text in the discussion (SXXX): XXX:PhJ:DoIt.
 
 	\emph{S10.R3.C2 (2) A more in-depth physical discussion of the weaker trends in some variables, such as MRI-ESM2-0 wind speed maxima, to explain whether these phenomena are related to the limitations of climate models or the atmospheric dynamics of some specific regions.}
 
-	S10.R3.C2.A1 XXX
+	S10.R3.C2.A1 Thanks. We can only speculate on these issues, of course, but have added the following text in the discussion (SXXX) to highlight the point: \ed{In general, is not clear whether the weak trends in wind speed variables are related to the limitations of climate models, or to real characteristics of future atmospheric dynamics}. XXX:PhJ:Addit. 
 
 	\emph{S10.R3.C3 (3) The conclusion of the paper does not mention whether the research problem in the introduction has been solved, so it is suggested to improve it.}
 
-	S10.R3.C3.A1 XXX
+	S10.R3.C3.A1 Thanks. We have added the following text in the discussion (SXXX): XXX:PhJ:WriteSomething.
 
 	\emph{S10.R3.C4 (4) Although the colors currently used (such as green, orange and gray) distinguish different climate scenarios, the colors are not bright enough, and high contrast color schemes can be considered, such as red and blue.}
 
-	S10.R3.C4.A1 XXX
+	S10.R3.C4.A1 Thanks. We find that different readers have preferences regarding colour schemes. The colour scheme used for the current work was selected based on current ``recommended popular'' colour schemes, it has been used by the authors in the past on multiple papers, and provides good contrast even when figures are viewed in greyscale.
 
 	\emph{S10.R3.C5 (5) The description of the model and data in the paper is rather redundant. For example, the model source and variable definition of CMIP6 are mentioned several times in different parts, and it is suggested to simplify.}
 
-	S10.R3.C5.A1 XXX
+	S10.R3.C5.A1 Thanks. The authors' view is that it is sometimes important to re-emphasise certain features of the work. Nevertheless, we accept the reviewers point and have removed some text in the manuscript, replacing it with references to other locations where a similar description is provided. Examples include: XXX:CL:[See if you can find places where we say the same think twice, about the model or the data. Make a list of these]. XXX:PhJ:DoIt.
 
 	\emph{S10.R4.C0 In this paper, the changes of the tail characteristics of wind speed, solar radiation and temperature output of CMIP6 climate model due to climate forcing are studied with time. To assess changes in centennial reproducible values of wind speed, solar radiation, and temperature variables in the CMIP6 climate model output, as well as changes in annual mean data for these variables over the period 2015 to 2100. The authors used Bayesian inference to estimate the parameters of a non-stationary extreme value model (GEVR) and a heterogeneous Gaussian regression (NHGR) model. Using these models, the authors quantified centennial recurrence changes in annual extremes and changes in annual mean levels over the period 2025 to 2125. The study considered three different climate scenarios (SSP126, SSP245, SSP585) and multiple climate model ensemble members. It is found that for wind speed variables, the study results show that the centennial recurrence value changes with time and climate scenarios are weak. In contrast, solar radiation and temperature variables show more pronounced changes in centennial recurrence values. For annual averages, the evidence for changes in wind speed variables over time is stronger, especially in the Northern Hemisphere, but the magnitude of change is smaller. The suggestions are as follows:}
 
 	\emph{S10.R4.C1 (1) Although Bayesian analysis does not rely on P-values, providing the median, mean, and confidence intervals (such as confidence intervals) of the posterior distribution will help readers understand the uncertainty of parameter estimates.}
 
-	S10.R4.C1.A1 XXX
+	S10.R4.C1.A1 Thanks. We accept the reviewer's point, and note that 95\% credible intervals (the Bayesian equivalent of frequentist ``confidence intervals'') are provided in many of the figures. In some cases, showing central characteristics (like the mean and median) alone is necessary to avoid too much clutter in figures. We hope we have reached a reasonable balance.
 
 	\emph{S10.R4.C2 (2) The specific application of non-stationary extreme value model and heterogeneous Gaussian regression model and the reasons for parameter selection can be further elaborated to help readers better understand the applicability and limitations of the model.}
 
-	S10.R4.C2.A1 XXX
+	S10.R4.C2.A1 Thanks. On choice of model, we have added the following text in SXXX: XXX:PhJ:DoIt. On ``parameter selection'', we believe the reviewer is referring to ``climate variable selection'' (i.e. why look at wind speed, TAS and RSDS?). In this case, we have added the following text in SXXX to explain that these variables are all of interest in the design of marine and coastal structures. The text reads: XXX:PhJ:DoIt.
 
 	\emph{S10.R4.C3 (3) The limitations of their research should be more clearly stated in the discussion section, including limitations in model selection, data availability, analytical methods, and interpretation of results.}
 
-	S10.R4.C3.A1 XXX
+	S10.R4.C3.A1 Thanks. We believe that we have emphasises the limitations of our work. For example, XXX:CL:[make a list of all the ``limitations'' we have mentioned in the discussion section of the original text, and put it here]. XXX:CL:[make a list of all the S*.R*.C*.A* responses we've made here which discuss limitations of methods, and list them here.]
 
 	\emph{S10.R4.C4 (4) In the discussion section, the possible reasons for the uncertainty of the hundred-year recurrence value of the wind speed variable are discussed in detail, and the potential impact on the offshore engineering design is discussed.}
 
-	S10.R4.C4.A1 XXX
+	S10.R4.C4.A1 Thanks.
 
 	\emph{S10.R4.C5 (5) It is recommended that the authors further explore in the discussion section how these findings can be applied to actual ocean engineering design, especially in consideration of the effects of climate change.}
 
-	S10.R4.C5.A1 XXX
+	S10.R4.C5.A1 Thanks. We would note that this work is a research article on the effect of climate change on variables of interest to ocean engineers. We also note that various industrial bodies (e.g. XXX:PhJ:[reference Jason's stuff]) have already provided recommendations for design subject to climate change. The current work provides input to inform some of these recommendations, but is not ``the complete answer'' in itself. We have added the following text in the discussion, to reflect this: XXX:PhJ:DoIt.
 
 	\emph{S10.R5.C0 The paper presents a statistical analysis of projected future changes in both extremes and means of four climate variables, based on outputs from seven CMIP6 GCMs, under three climate scenarios, and multiple ensemble runs. The primary objective is to explore the tail characteristics of the distributions for wind, solar irradiance, and temperature across different spatial scales: globally, within specific climate zones, and at select point locations in the North Atlantic and Celtic Sea, which I assume are of particular interest to Shell. I find the work to be thorough and of significant relevance to the scientific community. The authors' statistical approach is detailed and meticulous, demonstrating a clear mastery of the subject matter. Given the importance of the topic and the rigorous methodology employed, I recommend this paper for publication, subject to addressing a few minor points. My main comments are outlined below.}
 
 	\emph{S10.R5.C1 (1) The authors do not provide any rationale for selecting the climate variables, but given that this is a scientific paper, it is valuable to provide context in the introduction. Please include some background information and perhaps specific examples explaining why wind, solar irradiance, and temperature were chosen. Are these variables relevant for floating solar installations? Are they crucial for offshore wind farms? What are the reasons behind these selections? Additionally, offer a brief explanation of why these specific seven GCMs were selected, even if it is simply for convenience because they were readily available in your database. Overall, both the choice of variables and the selection of models would benefit from more background information.}
 
-	S10.R5.C1.A1 XXX
+	S10.R5.C1.A1 Thanks. A similar point was made by R4. On relevance of climate variables, please refer to our response S10.R4.C5.A1, and associated changes to the manuscript. XXX:PhJ:DoIt.
+	
+	S10.R5.C1.A2 On GCMs, the choice was pragmatic. The GCMs chosen were simple all those available on the UK CMIP6 site which provided sufficiently comprehensive output (e.g. multiple ensemble runs, multiple scenarios, ...) on all of \RS, \WS, \WM and \TA. We have added a sentence in SXXX to clarify this. XXX:PhJ:DoIt.  
 
 	\emph{S10.R5.C2 (2) If I understand correctly, for sfcWind, rsds, and tas, you extracted daily averages. While I recognize that this choice simplifies the analysis, it raises questions about its impact on extreme statistics. This potential limitation is not addressed anywhere in the text. It would be beneficial to mention this as a limitation of the study in the conclusion. Is this the reason why you selected sfcWindmax for the wind?}
 
-	S10.R5.C2.A1 XXX
+	S10.R5.C2.A1 Thanks. We have added the following text in SXXX. XXX:PhJ:Doit.
 
 	\emph{S10.R5.C3 (3) Figure 3 is unclear. It's not immediately apparent how the ensemble members are represented, as I only see a single point per model in most of the subplots and the colours for the scenarios. I believe this figure requires revision for better clarity.}
 
-	S10.R5.C3.A1 XXX
+	S10.R5.C3.A1 Thanks. We agree in general that presenting a huge amount of analysis output succinctly is challenging! Nevertheless, on reflection, the authors think that F3 as it stands is informative. There are multiple points per model (these sometimes overlap to some extent in some cases, but clearly do not in others). We have added the following text to the caption to emphasise this: XXX:CL:[Suggest text can we add to explain there are multiple dots for each colour, and add it here]. XXX:PhJ:CheckIt.
 
 	\emph{S10.R5.C4 (4) The study assumes that all three model parameters (location, scale, and shape) change linearly over time. Have you tested the impact of assuming changes in only the location parameter, for example? Additionally, do you have any plans to incorporate covariates, such as the North Atlantic Oscillation Index, for specific regions? Addressing these points could strengthen the robustness of the analysis.}
 
-	S10.R5.C4.A1 XXX
+	S10.R5.C4.A1 Thanks! This is an interesting point, and the subject of current work. Model choice for the work was motivated by that used in \cite{EwnJnt23a}, which exploited linear growth of all model parameters (for GEV and NHGR). We agree completely that in some cases a simpler model might have been more appropriate, as the reviewer suggests. Nevertheless, for the sake of simpicity of exposition, we preferred to retain a common linear functional form the variation of GEV and NHGR parameters. In current work, on changes in extreme temperatures, we are attempting a more sophisticated analysis in which model selection across a hierarchy of models of different complexity (using a criterion such as the divergence information criterion, DIC) is exploited. We have added the following text in the discussion (SXXX) to emphasise this: XXX:PhJ:DoIt.
 
 	\emph{S10.R5.C5 (5) The final statistics tables provide a concise and engaging way to summarize the overall variability in the analysis and the confidence in the projected changes. However, the assumption that all models contribute equally is a bit of a stretch. There is no discussion in the text regarding the independence of GCMs, and treating ensemble runs as independent realisations when they essentially represent the same climate model with different initial conditions, model set up, or test runs, is also a questionable assumption. I recommend adding a dedicated discussion in the conclusion section to address model independence and explicitly state these assumptions as a limitation. Additionally, while it may be clear to the authors, the methodology for calculating the expected value of change and the probability of change should be explicitly described. For example, is the expected value simply the mean of all return values across the GCMs and ensemble runs? Is the probability of change calculated as the fraction of models where $\Delta > 0$ over the total number of models? Clarifying these details would greatly enhance the transparency of the analysis.}
 
-	S10.R5.C5.A1 XXX
+	S10.R5.C5.A1 Thanks. On the assumption of independence of GCMs, we again agree with the reviewer's comment. We have added the following text to clarify the potential limitations of assuming independence: XXX:PhJ:DoIt[Access, UK common components; can you actually learn which GCM is working best and upweigh it?]
+
+	S10.R5.C5.A2 On estimating probabilities of change, and expected change, the procedure is straightforward and more-or-less what the reviewer outlines. We have added the following text to clarify: XXX:PhJ:DoIt.
 
 	%DO WE WANT TO KEEP THIS LINE%
 	
-	\emph{S10.R5.C8 \ed{DO WE WANT TO KEEP THIS TEXT} Minor comments: It is quite challenging to give detailed comments on the text without line numbers, but I will try my best. Next time I suggest submitting with line numbers.}
+	\emph{S10.R5.C6 \ed{DO WE WANT TO KEEP THIS TEXT} Minor comments: It is quite challenging to give detailed comments on the text without line numbers, but I will try my best. Next time I suggest submitting with line numbers.}
+	
+	S10.R5.C6.A1 Thanks. We are sorry about this. To be honest, it is never clear to the authors whether it is intended that the line-numbering be introduced at LaTeX compilation, or thereafter by ``compilation'' on the OE website. Apologies, we will try to do better next time.
 
-	\emph{S10.R5.C9 In the objective and outlines subsection " For the global and climate zone analyses, we think it IS interesting …" Eq. 3: do you weigh your climate zone averages by latitude?}
 
-	S10.R5.C9.A1 XXX
+	\emph{S10.R5.C7 In the objective and outlines subsection " For the global and climate zone analyses, we think it IS interesting …"}
+		
+	S10.R5.C7.A1 Thanks. Actually, we judge the ``is'' optional here; the sentence reads well either way. In the spirit of compromise, we have added it \ed{is} as requested. XXX:PhJ: Doit.
+	
+	\emph{S10.R5.C8 Eq. 3: do you weigh your climate zone averages by latitude?}
+
+	S10.R5.C8.A1 Thanks. This point is explained in the text. Within climate zone, we take the arithmetic mean of values (and acknowledge that this is an approximation). However, across climate zones, we calculate global means correcting for the area differences between the different zones.
 
 	\emph{S10.R5.C10 Figure 2: It might be actually more interesting to show here the ensemble averages from all your model runs, instead of just one model.}
 
-	S10.R5.C10.A1 XXX
+	S10.R5.C10.A1 Thanks. We agree in general that presenting a huge amount of analysis output (from the original GCM and the subsequent statistical work) succinctly is challenging! Nevertheless, on reflection, the authors think that F2 as it stands is informative (because it is relatively uncluttered), particularly coupled with all the complementary supporting material in SM. We hope the reviewer can live with this. 
 
 	\emph{S10.R5.C11 Page 6 "In summary, climate scenario effects on wind speed variables are less pronounced than on rsds and tas, with the exception of the Arctic zone; physically, perhaps this is related to the occurrence of polar lows and cyclonic systems there, but it IS not clear…"}
 
-	S10.R5.C11.A1 XXX
+	S10.R5.C11.A1 Thanks, \ed{is} added.
 
 	\emph{S10.R5.C12 Page 6, just before Figure 3: "Section 3" remove the s.}
 
-	S10.R5.C12.A1 XXX
-
-
+	S10.R5.C12.A1 Thanks, ``s'' removed. XXX:PhJ:DoIt
 
 	%\pagebreak
 	\bibliographystyle{elsarticle-harv}

@@ -4,48 +4,46 @@ The top-level auxiliary file: LchEtAl2024-Rejoinder.aux
 Reallocating 'name_of_file' (item size: 1) to 16 items.
 The style file: elsarticle-harv.bst
 Reallocating 'name_of_file' (item size: 1) to 5 items.
-I found no \citation commands---while reading file LchEtAl2024-Rejoinder.aux
 Database file #1: phil.bib
 Reallocating 'singl_function' (item size: 4) to 100 items.
-You've used 0 entries,
+You've used 1 entry,
             2990 wiz_defined-function locations,
-            682 strings with 5736 characters,
-and the built_in function-call counts, 49 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 2
-:= -- 12
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
-chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 1
-format.name$ -- 0
-if$ -- 1
+            689 strings with 5907 characters,
+and the built_in function-call counts, 713 in all, are:
+= -- 54
+> -- 18
+< -- 1
++ -- 7
+- -- 6
+* -- 73
+:= -- 105
+add.period$ -- 3
+call.type$ -- 1
+change.case$ -- 7
+chr.to.int$ -- 1
+cite$ -- 1
+duplicate$ -- 49
+empty$ -- 55
+format.name$ -- 11
+if$ -- 129
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 0
-newline$ -- 15
-num.names$ -- 0
-pop$ -- 0
+missing$ -- 9
+newline$ -- 20
+num.names$ -- 4
+pop$ -- 17
 preamble$ -- 1
-purify$ -- 0
+purify$ -- 6
 quote$ -- 0
-skip$ -- 1
+skip$ -- 14
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
+substring$ -- 44
+swap$ -- 34
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
+type$ -- 9
 warning$ -- 0
-while$ -- 0
+while$ -- 4
 width$ -- 0
-write$ -- 14
-(There was 1 error message)
+write$ -- 28
