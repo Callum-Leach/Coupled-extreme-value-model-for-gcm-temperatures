@@ -122,7 +122,7 @@
 
 \begin{document}
 	
-	\title{\textbf{Reply on first review} \np \\ {XXX} \np \\ by Leach et al.}
+	\title{\textbf{Reply on first review} \np \\ Changes over time in the 100-year return value of climate model variables \np \\ by Leach et al.}
 	\np
 	\author{Please address all correspondence to Philip Jonathan (\emph{p.jonathan@lancaster.ac.uk})}
 	\date{}
@@ -145,7 +145,7 @@
 	\section*{Review section 1. Are the objectives and the rationale of the study clearly stated?}
 	\emph{S1.R2.C0 General comment. This study provides a detailed analysis of CMIP6 global coupled models, focusing on the effects of climate change at site-specific, regional, and global scales. The examination of changes in extreme quantiles, particularly the 100-year return value of climate variables, is highly relevant and enhances understanding of long-term trends. The methodology, combining extreme value analysis (GEV) and non-homogeneous Gaussian regression (NHGR), is well-suited for quantifying extreme events and spatial trends.The structure of the paper is clearly laid out, with a logical progression from data description and methodology to the presentation of results. The separation of global, climate zone, and specific location analyses provides a thorough exploration of the different scales at which climate change impacts may manifest. The inclusion of supplementary material further enhances the accessibility and understanding of the data and results. Only minor revisions are required to further enhance the clarity and impact of the paper. These include making a few refinements to the text for improved flow and precision, correcting typographical errors, and expanding the discussion of the results. Once these minor adjustments have been made, I believe the paper will be ready for publication. Overall, this work represents a significant contribution to the field, with well-defined objectives and a robust methodology. It offers valuable insights into the future projections of key climate variables and highlights the importance of considering both extremes and spatial averages when assessing climate change impacts.}
 	
-	S1.R2.C0.A1 We thank the reviewer for the positive comments. We have accommodated the majority of reviewer suggestions in the revised article, details below. XXX
+	S1.R2.C0.A1 We thank the reviewer for the positive comments. We have accommodated the majority of reviewer suggestions in the revised article, details per section given in this document.
 		
 	\emph{S1.R2.C1 Remark \#1 The introduction is thoughtfully organised, drawing on a range of references, including recent ones. The objectives are clearly articulated, and the article’s structure is comprehensively outlined. Furthermore, supplementary material is included to reinforce and support the content of the article. However, the data referenced in Leach (2024) is not available, as the provided link is not working. Please review and update the link in the reference “Leach, C., 2024. Changes over time in the 100-year return value of climate model variables: data. https://github.com/Callum-Leach/Climate-Change-100-Year-Return-Value-Offshore-Engineering-Data”, accordingly.}
 	
@@ -153,7 +153,7 @@
 		
 	\emph{S1.R2.C2 Remark \#2 In the first sentence of the 3rd paragraph of Section “2. Global coupled model output” (page 3 of the manuscript), it would be helpful to explicitly include the corresponding letters for initialisation, physics, and forcing of the model when describing the ensemble members. For improved clarity, you might consider revising the sentence as follows: “(…) we examine output for five climate model ensemble members (rX) where available; these correspond to a common initialisation (iX), physics (pX) and forcing (fX) per GCM, (…)”. This would provide readers with a clearer understanding of the specific configuration of each ensemble member, particularly when these details are referenced in Table 1.}
 	
-	S1.R2.C2.A1 We agree, and have added the description as suggested. We have revised the text in S1 to read \ed{we examine output for five climate model ensemble members (rX) where available; these correspond to a common initialisation (iX), physics (pX) and forcing (fX) per GCM,}. XXX:PJ:Add to manuscript.
+	S1.R2.C2.A1 We agree, and have added the description as suggested. We have revised the text in S1 to read \ed{we examine output for five climate model ensemble members (rX) where available; these correspond to a common initialisation (iX), physics (pX) and forcing (fX) per GCM,}.
 	
 	\emph{S1.R2.C3 Remark \#3 It would be beneficial to explicitly highlight why the 100-year return value is a critical metric for understanding climate change impacts. This could be incorporated into the introduction to ensure better alignment with the conclusions.}
 	
@@ -161,7 +161,7 @@
 
 	\emph{S1.R2.C4 Remark \#4 It would be helpful to clarify how this study contributes to bridging gaps in the existing literature, thereby strengthening the rationale for the research. This could be highlighted in the introduction or the discussion section for better context.}
 	
-	S1.R2.C4.A1 We agree, and have added a description as suggested. XXX:PhJ:Write something. XXX:CL:[Find where importance of 100-year value is mentioned]
+	S1.R2.C4.A1 We agree, and have added a description as suggested. XXX:PhJ:Write something.
 
 	\emph{S1.R3.C1 yes}
 
@@ -178,11 +178,11 @@
 		
 	\emph{S2.R2.C2 Remark \#5 It would be constructive to clarify in Section “3. Methodology" the rationale or criteria used to select and present the results from the UKESM1-0-LL GCM in Section "SM5 Diagnostic plots for GEVR model fitting to global annual data, and NHGR modelling fitting to global means, for UKESM1-0-LL" of the Supplementary Material, as opposed to results from other models.}
 	
-	S2.R2.C2.A1 Thanks. We chose UKESM1-0-LL as a typical example. We have added text to this effect in SXXX of the revised manuscript. The text reads \ed{Diagnostic plots were produced for all analyses undertaken. The UKESM1-0-LL GCM is used as a convenient exemplar.} XXX:PhJ:Add to manuscript.
+	S2.R2.C2.A1 Thanks. We chose UKESM1-0-LL as a typical example. We have added text to this effect in S4.1 of the revised manuscript. The text reads \ed{(Note that diagnostic plots were produced for all analyses undertaken. The UKESM1-0-LL GCM is used as a convenient exemplar here.)}
 		
 	\emph{S2.R2.C3 Remark \#6 It would be insightful to provide additional information about the specific parameters and settings used in the non-stationary GEV and NHGR models, as this would enable other researchers to replicate the statistical analysis.}
 	
-	S2.R2.C3.A1 XXX:CL:Find all section references which discuss anything to do with the setup of the MCMC. This list must include the appendix and the model definition section, but maybe more. Write a paragraph of text to say what is discussed where.
+	S2.R2.C3.A1 Details of the MCMC analysis (for GEV and NHGR models) is already provided in the Appendix. We have improved the descriptions of priors there to read \ed{Prior distributions were specified as follows for GEV: $\xi \sim U(-1,0.2)$; $\sigma \sim U(0,\infty)$; $\mu \sim U(-\infty, \infty)$ and for NHGR: $\alpha$, $\beta \sim U(0,\infty)$}. 
 	
 	\emph{S2.R3.C1 Yes [X] No [] N/A []}
 
@@ -197,7 +197,7 @@
 	
 	\emph{S3.R2.C2 Remark \#7 The paper discusses the choice of block maxima for the analysis of extreme values, but does not provide a clear justification for this selection over the peaks-over-threshold method. It would strengthen the manuscript to explicitly explain the reasoning behind selecting block maxima for the analysis, providing a more robust rationale for this approach.}
 	
-	S3.R2.C2.A1 XXX:PhJ:Write something. Reference earlier work with Kevin (POT more efficient). Reference discussion section where POT is discussed. But say that AM are easy to isolate from GCM output etc. XXX:CL:Find where POT is mentioned, and note the SXXX here.
+	S3.R2.C2.A1 Thanks. This issue is already addressed directly in S5.3.
 	
 	\emph{S3.R2.C3 Remark \#8 The paper would benefit from providing additional details regarding the criteria used to compare trends across models, particularly for parameters such as location ($\mu0$), scale ($\sigma0$), and shape ($\epsilon0$). A clearer explanation of these criteria would enhance the transparency and robustness of the analysis.}
 	
@@ -214,29 +214,29 @@
 
 	\emph{S4.R2.C1 Remark \#9 The paper provides an adequate number of figures for the reader to fully comprehend the study. The Supplementary Material includes additional figures for further reference, and relevant results from the analysis of the graphs in the supplementary document are also discussed within the manuscript. The supplementary document is well-structured, with an introductory section that clearly links the different sections of the supplementary material to the figures in the main manuscript. The figures are well-organised and effectively present the corresponding results. However, for consistency, it would be beneficial if all the graphs in the figures within the Supplementary Material included the x-axis labels. For instance, the graphs in Sections SM1 (Figures SM1 and SM2) and SM4 (Figures SM19 and SM20) do not display the x-axis values, whereas all other graphs in the remaining sections do. Furthermore, in the captions of figures that include empty panels (Figures SM19 and SM20), it would be more coherent to add the note “Empty panels indicate that data for the specific combination of GCM and climate variable was not available for analysis,” as seen in the caption of Figures SM1 and SM2.}
 
-	S4.R2.C1.A1 x-axis labels in figures: In figures consisting of multiple panels with common x-axis, we have ensured that the x-axis tick values and labels are only given on the bottom subset of panels. XXX:CL:Have changed figures: SM1, SM2, SM19 SM20 to new format. Need to check figure captions to explain empty subfigures
+	S4.R2.C1.A1 x-axis labels in figures: In figures consisting of multiple panels with common x-axis, we have ensured that the x-axis tick values and labels are only given on the bottom subset of panels. This entailed minor changes to figures SM1, SM2, SM19 and SM20.
 	
-	S4.R2.C1.A2 We have added the text \ed{Empty panels indicate that data for the specific combination of GCM and climate variable was not available for analysis} as suggested, where appropriate, resulting in changes to the captions of XXX:CL:List figures in main and SM.
+	S4.R2.C1.A2 We note that the text ``Empty panels indicate that data for the specific combination of GCM and climate variable was not available for analysis'' is already included in the caption of Figure SM1 and Figure SM2 (and by implication applies to other figures) where appropriate. For clarity we have added \ed{Empty panels indicate that data for the specific combination of GCM and climate variable was not available for analysis} to the captions of Figures SM19 and SM20.
 
 	\emph{S4.R2.C2 Remark \#10 In the fourth sentence of the 6th paragraph of Section “2.1. Compilation of spatial summaries: global and climate zone data” (page 5 of the manuscript), where it states “(…) Note also a suspect value in r1i1p1r1 for NorESM2-0-LL tas minimum for scenario SSP245 in the Antarctic (and hence Global), see Figures SM1 and SM8 for illustration: (…)”, it might be helpful to rephrase this as: “(…) see Figures SM8 and SM1, respectively, for illustration: (…)” in order to provide the reader with clearer guidance.}
 
-	S4.R2.C2.A1 We have rephrased the text as suggested, the new text reading XXX:CL:Do it.
+	S4.R2.C2.A1 We have reordered the figure references as suggested.
 
 	\emph{S4.R2.C3 Remark \#11 In the first sentence of the 9th paragraph of Section “2.1. Compilation of spatial summaries: global and climate zone data” (page 6 of the manuscript), where it is stated, “Figures SM10-SM16 show corresponding global annual mean time-series for the seven GCMs in turn, for further comparison,” there appears to be a slight mistake. Figures SM10-SM16 actually pertain to “climate zone annual mean time-series,” rather than “global annual mean time-series.” I would suggest reviewing the entire paragraph and verifying the accuracy of the information presented.}
 
-	S4.R2.C3.A1 Thanks. We have modified to paragraph as suggested. The revised paragraph reads XXX:CL:Do it. XXX:PhJ:Check it.
+	S4.R2.C3.A1 Thanks. There were a few typos in paragraph! The corrected text reads \ed{Figures~SM10-SM16 show corresponding climate zone annual mean time-series for the seven GCMs in turn, for further comparison. Again, there is good general consistency across GCMs. However, trends across climate zones for annual means are quite different to those for annual maxima; e.g. compare \RS across climate zones in Figures~SM9 and SM16. This suggests that the shape of the distribution of climate zone annual \RS in particular changes with climate zone.}
 
 	\emph{S4.R2.C4 Remark \#12 In the Supplementary Material, I suggest revising the caption for Figure SM25 (tas for UKESM1-0-LL) to clearly indicate that it represents global annual minima of tas for UKESM1-0-LL. The current caption is quite similar to that of Figure SM24 (UKESM1-0-LL, tas), which represents global annual maxima (a) and mean (b) values, potentially causing confusion for the reader.}
 
-	S4.R2.C4.A1 Thanks. We have revised the caption as suggested. The next caption reads XXX:CL:Do it. XXX:PhJ:Check it.
+	S4.R2.C4.A1 Thanks. We note that both the figure title and subcaption of Figure SM25 state that the figure refers to global annual minima.
 
 	\emph{S4.R2.C5 Remark \#13 In the Supplementary Material, the captions for Figures SM17 and SM18 should include the clarification: “The first two characters of the GCM name are used for concise labelling” consistent with the explanation provided in Figure SM26.}
 
-	S4.R2.C5.A1 Thanks. We have revised the caption as suggested. The next caption reads XXX:CL:Do it. XXX:PhJ:Check it.
+	S4.R2.C5.A1 Thanks. We note that Table 1 of the main text explains to acronyms used for GCM referencing. However, we have revised the caption of Figure SM17 as a compromise as suggested, adding the text \ed{Two letter acronyms are used to refer to GCMs, as detailed in Table 1 of the main text.} XXX:PhJ:AddIt.
 
 	\emph{S4.R2.C6 Remark \#14 In the caption of Figure 2, it would be beneficial to include the explanation: “”Mxm” and “Mnm” in titles represent maximum and minimum, respectively” as was done in Figure 5 of the manuscript. This clarification is particularly important since these abbreviations appear here for the first time in a figure.}
 
-	S4.R2.C6.A1 Thanks. We have revised the caption as suggested. The next caption reads XXX:CL:Do it. XXX:PhJ:Check it.
+	S4.R2.C6.A1 Thanks. We have revised the caption as suggested to include \ed{``Mxm'' and ``Mnm'' in titles refer to maximum and minimum respectively.} XXX:PhJ:AddIt.
 
 	\emph{S4.R2.C7 Remark \#15 Interpreting the means in the box-whisker plots presented in the Supplementary Material, Section SM6.1 (Figures SM26–29), is somewhat difficult; however, the presentation in the manuscript provides a clearer and more accessible format for interpretation.}
 
@@ -461,7 +461,7 @@
 
 	\emph{S10.R5.C9 Figure 2: It might be actually more interesting to show here the ensemble averages from all your model runs, instead of just one model.}
 
-	S10.R5.C9.A1 Thanks. We agree in general that presenting a huge amount of analysis output (from the original GCM and the subsequent statistical work) succinctly is challenging! Nevertheless, on reflection, the authors think that F2 as it stands is informative (because it is relatively uncluttered), particularly coupled with all the complementary supporting material in SM. We hope the reviewer can live with this. 
+	S10.R5.C9.A1 Thanks. We agree in general that presenting a huge amount of analysis output (from the original GCM and the subsequent statistical work) succinctly is challenging! Nevertheless, on reflection, the authors think that F2 as it stands is informative (because it is relatively uncluttered), particularly coupled with all the complementary supporting material in SM. We hope the reviewer can live with this. Including ensemble averages for 7 climate models and 3 scenarios would entail placing 21 lines in each panel, which is probably too much.
 
 	\emph{S10.R5.C10 Page 6 "In summary, climate scenario effects on wind speed variables are less pronounced than on rsds and tas, with the exception of the Arctic zone; physically, perhaps this is related to the occurrence of polar lows and cyclonic systems there, but it IS not clear…"}
 
