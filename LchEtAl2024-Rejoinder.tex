@@ -130,7 +130,7 @@
 	
 	\section*{Summary}
 	
-	XXX:CL: Make sure we use short-cuts with correct fonts for variable, GCM, climate scenario and NA/CS.
+	XXX:PhJ: Make sure we use short-cuts with correct fonts for variable, GCM, climate scenario and NA/CS.
 	
 	We thank four reviewers (referenced Reviewer 2-5) sincerely for their time and expertise in reviewing the manuscript. We note that both reviewers find merit in the work. 
 	
@@ -169,7 +169,7 @@
 
 	\emph{S1.R5.C1 Generally yes, however, the choices of variables and models needs to be put into context. Please see the Reviewer Comments to the Author Section.}
 	
-	S1.R5.C1.A1 Refer to S10.R5.CXXX. XXX:PhJ
+	S1.R5.C1.A1 Refer to S10.R5.
 	
 	%Section 2%
 	\section*{Review section 2. If applicable, is the application/theory/method/study reported in sufficient detail to allow for its replicability and/or reproducibility?}
@@ -430,11 +430,11 @@
 
 	\emph{S10.R5.C2 (2) If I understand correctly, for sfcWind, rsds, and tas, you extracted daily averages. While I recognize that this choice simplifies the analysis, it raises questions about its impact on extreme statistics. This potential limitation is not addressed anywhere in the text. It would be beneficial to mention this as a limitation of the study in the conclusion. Is this the reason why you selected sfcWindmax for the wind?}
 
-	S10.R5.C2.A1 Thanks. We have added the following text in SXXX. XXX:PhJ:Doit XXX:CL:[I cannot find any text which describes the limitations of using daily averages etc. In sectio 2 of the main manuscript we describe what data we collect, but nothing to do with limitations.]
+	S10.R5.C2.A1 Thanks. We have added the following text in S2. XXX:PhJ:Doit. XXX:CL:[I cannot find any text which describes the limitations of using daily averages etc. In section 2 of the main manuscript we describe what data we collect, but nothing to do with limitations.]
 
 	\emph{S10.R5.C3 (3) Figure 3 is unclear. It's not immediately apparent how the ensemble members are represented, as I only see a single point per model in most of the subplots and the colours for the scenarios. I believe this figure requires revision for better clarity.}
 
-	S10.R5.C3.A1 Thanks. We agree in general that presenting a huge amount of analysis output succinctly is challenging! Nevertheless, on reflection, the authors think that F3 as it stands is informative. There are multiple points per model (these sometimes overlap to some extent in some cases, but clearly do not in others). We have added the following text to the caption to emphasise this: XXX:CL:[\ed{and disc colour indicates climate scenario (SSP126, green; SSP245, orange; SSP585, grey), with the alpha level representing each ensemble for a given gcm. ...}]. XXX:PhJ:CheckIt.
+	S10.R5.C3.A1 Thanks. We agree in general that presenting a huge amount of analysis output succinctly is challenging! Nevertheless, on reflection, the authors think that F3 as it stands is informative. There are multiple points per model (these sometimes overlap to some extent in some cases, but clearly do not in others). We have added the following text to the caption to emphasise this: \ed{Discs indicate slopes for (multiple) ensemble members: disc colour indicates climate scenario (\SL, green; \SM, orange; \SH, grey), and disc ``alpha level'' distinguishes individual ensemble members given GCM.}
 
 	\emph{S10.R5.C4 (4) The study assumes that all three model parameters (location, scale, and shape) change linearly over time. Have you tested the impact of assuming changes in only the location parameter, for example? Additionally, do you have any plans to incorporate covariates, such as the North Atlantic Oscillation Index, for specific regions? Addressing these points could strengthen the robustness of the analysis.}
 
@@ -442,17 +442,13 @@
 
 	\emph{S10.R5.C5 (5) The final statistics tables provide a concise and engaging way to summarize the overall variability in the analysis and the confidence in the projected changes. However, the assumption that all models contribute equally is a bit of a stretch. There is no discussion in the text regarding the independence of GCMs, and treating ensemble runs as independent realisations when they essentially represent the same climate model with different initial conditions, model set up, or test runs, is also a questionable assumption. I recommend adding a dedicated discussion in the conclusion section to address model independence and explicitly state these assumptions as a limitation. Additionally, while it may be clear to the authors, the methodology for calculating the expected value of change and the probability of change should be explicitly described. For example, is the expected value simply the mean of all return values across the GCMs and ensemble runs? Is the probability of change calculated as the fraction of models where $\Delta > 0$ over the total number of models? Clarifying these details would greatly enhance the transparency of the analysis.}
 
-	S10.R5.C5.A1 Thanks. On the assumption of independence of GCMs, we again agree with the reviewer's comment. We have added the following text to clarify the potential limitations of assuming independence: XXX:PhJ:DoIt[Access, UK common components; can you actually learn which GCM is working best and upweigh it?] XXX:CL:[In section 5.2 we have written "the climate model and ensemble
-	output available to us are drawn randomly from large families of models and their ensemble member" but we have not explicitly stated any limitations to this, or anything to the effect of weighting models based on their performance.].
+	S10.R5.C5.A1 Thanks. On the assumption of independence of GCMs, we again agree with the reviewer's comment. We have added the following text to clarify the potential limitations of assuming independence: XXX:PhJ:DoIt[Access, UK common components; can you actually learn which GCM is working best and upweigh it?] XXX:CL:[In section 5.2 we have written "the climate model and ensemble output available to us are drawn randomly from large families of models and their ensemble member" but we have not explicitly stated any limitations to this, or anything to the effect of weighting models based on their performance.].
 
 	S10.R5.C5.A2 On estimating probabilities of change, and expected change, the procedure is straightforward and more-or-less what the reviewer outlines. We have added the following text to clarify: XXX:PhJ:DoIt.
-
-	%DO WE WANT TO KEEP THIS LINE%
 	
 	\emph{S10.R5.C6 Minor comments: It is quite challenging to give detailed comments on the text without line numbers, but I will try my best. Next time I suggest submitting with line numbers.}
 	
 	S10.R5.C6.A1 Thanks. We are sorry about this. To be honest, it is never clear to the authors whether it is intended that the line-numbering be introduced at LaTeX compilation, or thereafter by ``compilation'' on the OE website. Apologies, we will try to do better next time.
-
 
 	\emph{S10.R5.C7 In the objective and outlines subsection " For the global and climate zone analyses, we think it IS interesting …"}
 		
