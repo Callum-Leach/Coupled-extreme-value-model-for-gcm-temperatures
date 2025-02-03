@@ -1,0 +1,11 @@
+[project]
+name = "nonstationary_extremes"
+description = "This is a package for perform MCMC to fit a non-stationary generalised extreme value distribution."
+version = '0.0.1'
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "scipy",
+]
