@@ -25,7 +25,6 @@ class GevMCMC:
         self.nT = len(self.data.iloc[:, 0])
         self.Tim = np.linspace(0, 1, self.nT)
         self.nPrm, self.param_structure = self.setup_params()
-
         self.initial_params = self.find_starting_parameters()
 
     def setup_params(self):
@@ -74,7 +73,7 @@ class GevMCMC:
                 column_names.append(f"{param_name}_0")
             for degree in range(1, param_type + 1):  # Loop through degrees (1 = Linear, 2 = Quadratic)
                 for scenario in range(1, 4):  # 3 scenarios
-                    column_names.append(f"{param_name}_{degree}{scenario}")
+                    column_names.append(f"{param_name}_{scenario}{degree}")
 
         # Create the DataFrames with the generated columns
         samples = pd.DataFrame(columns=column_names)
@@ -138,6 +137,7 @@ class GevMCMC:
         """
 
         tNll = np.zeros([3, 1])
+        log_pdf_array = np.zeros([86, 3])
 
         Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)
 
@@ -148,7 +148,7 @@ class GevMCMC:
             # Compute the standardized variable (z)
             z = (x - Mu[:, iS]) / Sgm[:, iS]
             if np.any(1 + Xi[:, iS] * z <= 0):
-                return np.inf  # Invalid parameters (domain constraint violated)
+                return np.inf, tNll  # Invalid parameters (domain constraint violated)
 
             # Compute the log-likelihood for GEV
             if np.abs(Xi[:, iS]).max() < 1e-6:  # Limiting case as xi -> 0 (Gumbel)
@@ -164,7 +164,7 @@ class GevMCMC:
             # Accumulate the negative log-likelihood
             tNll[iS] = -1 * np.sum(log_pdf)
 
-        return np.sum(tNll)
+        return np.sum(tNll), tNll
 
     
     def log_prior(self, params, time_steps):
@@ -214,22 +214,23 @@ class GevMCMC:
     def acceptance_prob(self, old_params, new_params, time_steps):
         log_prior_old = self.log_prior(old_params, time_steps)
         log_prior_new = self.log_prior(new_params, time_steps)
-        log_likelihood_old = self.log_likelihood(old_params, time_steps)
-        log_likelihood_new = self.log_likelihood(new_params, time_steps)
+        log_likelihood_old, tNll_old = self.log_likelihood(old_params, time_steps)
+        log_likelihood_new, tNll_new = self.log_likelihood(new_params, time_steps)
 
         log_ratio = (-1*log_likelihood_new + log_prior_new) - (
             -1*log_likelihood_old + log_prior_old
         )
 
-        return np.exp(log_ratio), log_likelihood_old
+        return np.exp(log_ratio), log_likelihood_old, tNll_old
 
     def metropolis_hastings(
         self, n_samples, n2plt, burn_in=1000, thinning=10, beta=0.5, NGTSTR=0.1
     ):
-        
         samples, total_accepted = self.setup_dataframes()
         ar = pd.DataFrame(columns=["acceptance_rate"])
         nloglikelihood = pd.DataFrame(columns=["negative_log_likelihood"])
+        t_nloglikelihood = pd.DataFrame(columns=[12, 24, 58])
+
         current_params = self.initial_params
         time_steps = np.linspace(0, 1, len(self.data.iloc[:, 0]))
 
@@ -240,7 +241,7 @@ class GevMCMC:
 
                     new_params[j] = new_params[j] + np.random.normal(0, 1) * NGTSTR
 
-                    acceptance_probability, nll = self.acceptance_prob(
+                    acceptance_probability, nll, tNll = self.acceptance_prob(
                         current_params, new_params, time_steps
                     )
 
@@ -250,6 +251,16 @@ class GevMCMC:
 
                 nloglikelihood = pd.concat(
                     [nloglikelihood, pd.DataFrame({"negative_log_likelihood": [nll]})],
+                    ignore_index=True,
+                )
+
+                t_nloglikelihood = pd.concat(
+                    [
+                        t_nloglikelihood,
+                        pd.DataFrame(
+                            [tNll.flatten()], columns=[12, 24, 58]  # Assigning correct labels
+                        ),
+                    ],
                     ignore_index=True,
                 )
 
@@ -275,7 +286,7 @@ class GevMCMC:
                     time_steps,
                 )
                 
-                acceptance_probability, nll = self.acceptance_prob(
+                acceptance_probability, nll, tNll = self.acceptance_prob(
                     current_params, new_params, time_steps
                 )
 
@@ -285,6 +296,16 @@ class GevMCMC:
                 
                 nloglikelihood = pd.concat(
                     [nloglikelihood, pd.DataFrame({"negative_log_likelihood": [nll]})],
+                    ignore_index=True,
+                )
+
+                t_nloglikelihood = pd.concat(
+                    [
+                        t_nloglikelihood,
+                        pd.DataFrame(
+                            [tNll.flatten()], columns=[12, 24, 58]  # Assigning correct labels
+                        ),
+                    ],
                     ignore_index=True,
                 )
 
@@ -311,7 +332,7 @@ class GevMCMC:
                 ignore_index=True,
             )
 
-        return samples, total_accepted, ar, nloglikelihood
+        return samples, total_accepted, ar, nloglikelihood, t_nloglikelihood
 
     def find_starting_parameters(self):
 
@@ -323,7 +344,7 @@ class GevMCMC:
         """
 
         # Here we simply fit a gumble distribution, setting xi = 0
-        combined_data = self.data.values.ravel()
+        combined_data = self.data[['12', '24', '58']].values.ravel()
 
         beta = (np.sqrt(6) * np.std(combined_data)) / np.pi
         mu = np.mean(combined_data)
@@ -347,48 +368,97 @@ class GevMCMC:
                     param_idx += 1
         
         return PrmCns
+
+    def percent_point(self, q, c, mu, scale):
+        """
+        Compute the percent-point function (PPF) for the generalized extreme value (GEV) distribution.
+        
+        Parameters:
+        q : float or array-like
+            Probability (quantile) in range (0,1).
+        c : float
+            Shape parameter.
+        mu : float, optional
+            Location parameter (default=0).
+        sigma : float, optional
+            Scale parameter (default=1), must be positive.
+        
+        Returns:
+        x : float or array-like
+            The inverse CDF value corresponding to q.
+        """
+
+        q, c, mu, scale = map(np.asarray, (q, c, mu, scale))
+
+        if np.any(scale) <= 0:
+            raise ValueError("Scale parameter scale must be positive.")
+        if np.any((q <= 0) | (q >= 1)):
+            raise ValueError("q must be in the open interval (0,1).")
+        
+        if np.any(c) == 0:
+            return mu - scale * np.log(-np.log(q))
+        else:
+            return mu + (scale / c) * ((-np.log(q)) ** (-c) - 1)
     
     def plot_return_values(self, samples):
-        RtrPrd = 100  # Return Period
-        nRls = 250  # Number of samples to use.
+        RtrPrd = 100
+        n_samples = len(samples)
 
-        # Get the time_step value for 2025 & 2125
         t_start = (2025 - 2015) / (2100 - 2015)
         t_end = (2125 - 2015) / (2100 - 2015)
 
-        tXi = samples.iloc[:, 4] + t_start * samples.iloc[:, 5]
-        tSgm = samples.iloc[:, 2] + t_start * samples.iloc[:, 3]
-        tMu = samples.iloc[:, 0] + t_start * samples.iloc[:, 1]
+        RV_Start = np.zeros((n_samples, 3))
+        RV_End = np.zeros((n_samples, 3))
+        RV_Delta = np.zeros((n_samples, 3))
 
-        # Return value calculations at start
-        RV_Start = genextreme.ppf(1 - 1 / RtrPrd, c=tXi, loc=tMu, scale=tSgm)
+        start_params = {
+            "Mu": np.zeros((n_samples, 3)),
+            "Sgm": np.zeros((n_samples, 3)),
+            "Xi": np.zeros((n_samples, 3)),
+        }
 
-        # Parameter estimates at end
-        tXi_End = samples.iloc[:, 4] + t_end * samples.iloc[:, 5]
-        tSgm_End = samples.iloc[:, 2] + t_end * samples.iloc[:, 3]
-        tMu_End = samples.iloc[:, 0] + t_end * samples.iloc[:, 1]
+        end_params = {
+            "Mu": np.zeros((n_samples, 3)),
+            "Sgm": np.zeros((n_samples, 3)),
+            "Xi": np.zeros((n_samples, 3)),
+        }
 
-        # Return value calculations at end
-        RV_End = genextreme.ppf(1 - 1 / RtrPrd, c=tXi_End, loc=tMu_End, scale=tSgm_End)
+        indices = {
+            "Mu": 0,
+            "Sgm": 3 * self.param_structure[0] + 1,
+            "Xi": 3 * (self.param_structure[0] + self.param_structure[1]) + 2,
+        }
+
+        for iS in range(3):
+
+            for param in ["Mu", "Sgm", "Xi"]:
+                terms = {
+                    "C": samples.iloc[:, indices[param]],  # Constant term
+                    "L": samples.iloc[:, indices[param] + iS + 1] if self.param_structure[["Mu", "Sgm", "Xi"].index(param)] >= 1 else 0, # Linear term
+                    "Q": samples.iloc[:, indices[param] + 4 + iS] if self.param_structure[["Mu", "Sgm", "Xi"].index(param)] >= 2 else 0, # Quadratic term
+                }
+
+                start_params[param][:, iS] = terms["C"] + terms["L"] * t_start + terms["Q"] * t_start**2
+                end_params[param][:, iS] = terms["C"] + terms["L"] * t_end + terms["Q"] * t_end**2
+            
+            RV_Start[:, iS] = self.percent_point(
+                1 - 1 / RtrPrd, 
+                c=start_params["Xi"][:, iS], 
+                mu=start_params["Mu"][:, iS], 
+                scale=start_params["Sgm"][:, iS]
+            )
+
+            RV_End[:, iS] = self.percent_point(
+                1 - 1 / RtrPrd, 
+                c=end_params["Xi"][:, iS], 
+                mu=end_params["Mu"][:, iS], 
+                scale=end_params["Sgm"][:, iS]
+            )
+
         RV_Delta = RV_End - RV_Start
-        # Summary statistics
-        Prb = np.nanmean(RV_End > RV_Start)
-        Cdf = np.column_stack((np.sort(RV_Start), np.sort(RV_End)))
-        Qnt = np.percentile(RV_Start, [2.5, 50, 97.5]), np.percentile(
-            RV_End, [2.5, 50, 97.5]
-        )
+        RV_Delta = pd.DataFrame(RV_Delta, columns=["12", "24", "58"])
 
-        RV_Delta_Return = [
-            RV_Delta,
-            RV_Start,
-            RV_End,
-            Prb,
-            np.nanpercentile(RV_Delta, 2.5),
-            np.nanmedian(RV_Delta),
-            np.nanpercentile(RV_Delta, 97.5),
-        ]
-
-        return RV_Delta_Return
+        return RV_Delta
     
 
     def run(self, n_samples, n2plt, burn_in=1000, thinning=1, beta=0.05, NGTSTR=0.1):
@@ -398,11 +468,11 @@ class GevMCMC:
         We compensate for this when displaying graphs, but keep it for computation purposes.
         """
 
-        samples, total_accepted, ar, nloglikelihood = self.metropolis_hastings(
+        samples, total_accepted, ar, nloglikelihood, t_nloglikelihood = self.metropolis_hastings(
             n_samples, n2plt, burn_in, thinning, beta
         )
 
-        return samples, total_accepted, ar, nloglikelihood
+        return samples, total_accepted, ar, nloglikelihood, t_nloglikelihood
 
 
         
