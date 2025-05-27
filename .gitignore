@@ -180,4 +180,4 @@ Processed/
 *.gz
 *.pdf
 *.ipynb
-.DS_Store
+*.DS_Store
