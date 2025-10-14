@@ -18,7 +18,6 @@ class GevMCMC:
         data: T x 3 DataFrame where each column denotes each scenario 
         """
         
-        # self.data = data[~np.isnan(data), :]
         self.data = data.dropna()
         self.param_setup = param_setup
         self.verbose = verbose
@@ -26,7 +25,7 @@ class GevMCMC:
         self.Tim = np.linspace(0, 1, self.nT)
         self.nPrm, self.param_structure = self.setup_params()
         self.initial_params = self.find_starting_parameters()
-
+    
     def setup_params(self):
         """
         This function sets up the correct parameters given a string. It sets up the total number of parameters, along with the parameter indices.
@@ -43,16 +42,17 @@ class GevMCMC:
         """
 
         config_map = {
-        "CCC": (3, [0, 0, 0]),       # Only constant terms
-        "LCC": (6, [1, 0, 0]),       # Linear Mu, constant Sgm and Xi
-        "LLC": (9, [1, 1, 0]),       # Linear Mu and Sgm, constant Xi
-        "QCC": (9, [2, 0, 0]),       # Quadratic Mu, constant Sgm and Xi
-        "LLL": (12, [1, 1, 1]),      # Linear for all
-        "QLC": (12, [2, 1, 0]),      # Quadratic Mu, Linear Sgm, constant Xi
-        "QLL": (15, [2, 1, 1]),      # Quadratic Mu, Linear Sgm and Xi
-        "QQC": (15, [2, 2, 0]),      # Quadratic Mu and Sgm, constant Xi
-        "QQL": (18, [2, 2, 1]),      # Quadratic Mu and Sgm, Linear Xi
-        "QQQ": (21, [2, 2, 2]),      # Quadratic MU, Sgm, Xi
+        "CCC": (3, [0, 0, 0, 0]),       # Only constant terms
+        "LCC": (6, [1, 0, 0, 0]),       # Linear Mu, constant Sgm and Xi
+        "LLC": (9, [1, 1, 0, 0]),       # Linear Mu and Sgm, constant Xi
+        "QCC": (9, [2, 0, 0, 0]),       # Quadratic Mu, constant Sgm and Xi
+        "LLL": (12, [1, 1, 1, 0]),      # Linear for all
+        "QLC": (12, [2, 1, 0, 0]),      # Quadratic Mu, Linear Sgm, constant Xi
+        "QLL": (15, [2, 1, 1, 0]),      # Quadratic Mu, Linear Sgm and Xi
+        "QQC": (15, [2, 2, 0, 0]),      # Quadratic Mu and Sgm, constant Xi
+        "QQL": (18, [2, 2, 1, 0]),      # Quadratic Mu and Sgm, Linear Xi
+        "QQQ": (21, [2, 2, 2, 0]),      # Quadratic MU, Sgm, Xi
+        "ACC": (9, [2, 0, 0, 1])        # Asymptotic QCC model
         }
 
         if self.param_setup not in config_map:
@@ -71,8 +71,8 @@ class GevMCMC:
         for param_type, param_name in zip(self.param_structure, ["mu", "s", "x"]):
             if param_type >= 0:  # Constant term
                 column_names.append(f"{param_name}_0")
-            for degree in range(1, param_type + 1):  # Loop through degrees (1 = Linear, 2 = Quadratic)
-                for scenario in range(1, 4):  # 3 scenarios
+            for scenario in range(1, 4): # Loop through scenarios
+                for degree in range(1, param_type + 1):  # Loop through degrees (1 = Linear, 2 = Quadratic)
                     column_names.append(f"{param_name}_{scenario}{degree}")
 
         # Create the DataFrames with the generated columns
@@ -81,119 +81,251 @@ class GevMCMC:
 
         return samples, total_accepted
     
+    def sigmoid_mu(self, x, a, b, c):
+        """
+        Compute the proposed sigmoid-like reparameterisation:
+        y = a + (b) * (1 - exp(-x*(c+0.5))) / (1 + exp(-x*(c+0.5)))(1 + exp(-(c+0.5))) / (1 - exp(-(c+0.5)))
+        x : array-like (nT,)
+        a : scalar
+        b : scalar
+        c : scalar (should be > 0 ideally)
+        Returns array shape (nT,)
+        """
+
+        # compute kernel
+        z = np.exp(-np.asarray(x) * (c+0.5))
+        z_end = np.exp(-1 * (c+0.5))
+        kernel = (1 - z) / (1 + z)
+        scale = (b)*((1+z_end) / (1-z_end))
+        return a + scale * kernel
+    
     def build_parameter_arrays(self, params, time_steps):
+        """
+        Build Mu, Sgm, Xi arrays for 3 scenarios across time_steps.
 
-        Mu = np.zeros((self.nT, 3))
-        Sgm = np.zeros((self.nT, 3))
-        Xi = np.zeros((self.nT, 3))
+        - param_structure: list/tuple with degrees for [Mu, Sgm, Xi] where degree is 0 (const), 1 (linear), 2 (quadratic)
+        - params: 1D array-like containing the parameters in the same relative ordering you used originally
+        - time_steps: array-like of length nT (e.g. Tim)
 
-        # Compute Mu, Sgm, and Xi for each scenario
+        NOTE: In 'sigmoid' mode the Mu block of params is expected to contain:
+            params[Mu_start] -> a (shared)
+            params[Mu_start+1:Mu_start+4] -> b1,b2,b3
+            params[Mu_start+4:Mu_start+7] -> c1,c2,c3
+        """
+
+        params = np.asarray(params)
+        time_steps = np.asarray(time_steps)
+        nT = time_steps.size
+
+        # prepare outputs with shape (nT, 3)
+        Mu = np.zeros((nT, 3))
+        Sgm = np.zeros((nT, 3))
+        Xi = np.zeros((nT, 3))
+
+        # compute starting indices for each parameter block
+        Mu_start = 0
+        Sgm_start = Mu_start + 3 * self.param_structure[0] + 1
+        Xi_start = Sgm_start + 3 * self.param_structure[1] + 1
+
         for iS in range(3):
+            # MU block
+            if self.param_structure[3] == 0:
+                # original constant/linear/quadratic mapping
+                Mu[:, iS] = params[Mu_start]  # constant term
+                if self.param_structure[0] >= 1:  # linear
+                    Mu[:, iS] += params[Mu_start + self.param_structure[0]*iS + 1] * time_steps
+                if self.param_structure[0] >= 2:  # quadratic
+                    Mu[:, iS] += params[Mu_start + self.param_structure[0]*iS + 2] * (time_steps ** 2)
+            elif self.param_structure[3] == 1:
 
-            """
-            # Dynamic starting positions:
-            Mu = 0
-            Sgm = Mu.degree*3 + 1
-            Xi = 3*(Mu.degree + Sgm.degree) + 2
+                if self.param_structure[0] != 2:
+                    raise ValueError
+                
+                # Using new parameter mapping: a + (b/2)*(1-exp(-x/c))/(1+exp(-x/c))
+                a = params[Mu_start]
+                b = params[Mu_start + 2*iS + 1]
+                c = params[Mu_start + 2*iS + 2]
 
-            So what is the best way forward. We firstly want to iterate over all scenarios.
-            Then look at the degree of each parameter
-            """
+                Mu[:, iS] = self.sigmoid_mu(time_steps, a, b, c)
 
-            Mu_start = 0
-            Sgm_start = 3 * self.param_structure[0] + 1
-            Xi_start = 3 * (self.param_structure[0] + self.param_structure[1]) + 2
-
-            # Calculate Mu for this scenario
-            Mu[:, iS] = params[Mu_start]  # Constant term
-            if self.param_structure[0] >= 1:  # Linear term
-                Mu[:, iS] += params[Mu_start + iS + 1] * time_steps
-            if self.param_structure[0] >= 2:  # Quadratic term
-                Mu[:, iS] += params[Mu_start + 4 + iS] * (time_steps ** 2)
-
-            # Calculate Sgm for this scenario
-            Sgm[:, iS] = params[Sgm_start]  # Constant term
+            # Sgm block
+            Sgm[:, iS] = params[Sgm_start]  # constant term
             if self.param_structure[1] >= 1:  # Linear term
-                Sgm[:, iS] += params[Sgm_start + iS + 1] * time_steps
+                Sgm[:, iS] += params[Sgm_start + self.param_structure[1]*iS + 1] * time_steps
             if self.param_structure[1] >= 2:  # Quadratic term
-                Sgm[:, iS] += params[Sgm_start + 4 + iS] * (time_steps ** 2)
+                Sgm[:, iS] += params[Sgm_start + self.param_structure[1]*iS + 2] * (time_steps ** 2)
 
-            # Calculate Xi for this scenario
-            Xi[:, iS] = params[Xi_start]  # Constant term
+            # Xi block
+            Xi[:, iS] = params[Xi_start]  # constant term
             if self.param_structure[2] >= 1:  # Linear term
-                Xi[:, iS] += params[Xi_start + iS + 1] * time_steps
+                Xi[:, iS] += params[Xi_start + self.param_structure[2]*iS + 1] * time_steps
             if self.param_structure[2] >= 2:  # Quadratic term
-                Xi[:, iS] += params[Xi_start + 4 + iS] * (time_steps ** 2)
+                Xi[:, iS] += params[Xi_start + self.param_structure[2]*iS + 2] * (time_steps ** 2)
 
         return Mu, Sgm, Xi
         
-    def log_likelihood(self, params, time_steps):
+    # def log_likelihood(self, params, time_steps, return_pointwise=False):
+    #     """
+    #     This function calculates the log_likelihood of a generalised extreme value distribution
+
+    #     Input (list, list): params which is a list of estimates for the three gev parameters. time_steps is an array of points from 0,1 which is the length of the data.
+
+    #     Output (float): the log_likelihood of a generalised extreme value distribution with the passed in parameters.
+    #     """
+
+    #     tNll = np.zeros([3, 1])
+    #     log_pdf_array = np.zeros([len(self.data), 3])
+
+    #     Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)
+
+    #     for iS in range(3):
+
+    #         x = self.data.iloc[:, iS]
+
+    #         # Compute the standardised variable (z)
+    #         z = (x - Mu[:, iS]) / Sgm[:, iS]
+    #         if np.any(1 + Xi[:, iS] * z <= 0):
+    #             if return_pointwise:
+    #                 return np.inf, tNll, None
+    #             else:
+    #                 return np.inf, tNll # Invalid parameters (domain constraint violated)
+
+    #         # Compute the log-likelihood for GEV
+    #         if np.abs(Xi[:, iS]).max() < 1e-6:  # Limiting case as xi -> 0 (Gumbel)
+    #             log_pdf = -np.log(Sgm[:, iS]) - z - np.exp(-z)
+    #         else:  # General case for xi != 0
+    #             t = 1 + Xi[:, iS] * z
+    #             log_pdf = (
+    #                 -np.log(Sgm[:, iS])
+    #                 - (1 / Xi[:, iS] + 1) * np.log1p(Xi[:, iS] * z)
+    #                 - t**(-1 / Xi[:, iS])
+    #             )
+
+    #         # Accumulate the negative log-likelihood
+    #         log_pdf_array[:, iS] = log_pdf
+    #         tNll[iS] = -1 * np.sum(log_pdf)
+        
+    #     total_nll = np.sum(tNll)
+        
+    #     if return_pointwise:
+    #         return total_nll, tNll, log_pdf_array
+    #     else:
+    #         return total_nll, tNll
+
+    def log_likelihood(self, params, time_steps, return_pointwise=False):
         """
-        This function calculates the log_likelihood of a generalised extreme value distribution
-
-        Input (list, list): params which is a list of estimates for the three gev parameters. time_steps is an array of points from 0,1 which is the length of the data.
-
-        Output (float): the log_likelihood of a generalised extreme value distribution with the passed in parameters.
+        Vectorized log-likelihood for GEV across all sites (faster version)
         """
+        data_np = self.data.values  # shape (nT, 3)
+        Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)  # each (nT, 3)
 
-        tNll = np.zeros([3, 1])
-        log_pdf_array = np.zeros([86, 3])
+        # Standardized variable
+        z = (data_np - Mu) / Sgm
+        t = 1 + Xi * z
 
-        Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)
+        # Check domain validity
+        invalid_mask = (t <= 0) | (Sgm <= 0)
+        if np.any(invalid_mask):
+            if return_pointwise:
+                return np.inf, np.zeros((3, 1)), None
+            return np.inf, np.zeros((3, 1))
 
-        for iS in range(3):
+        # Compute log-pdf for both xi ≈ 0 and xi != 0 in one vectorized form
+        small_xi_mask = np.abs(Xi) < 1e-6
 
-            x = self.data.iloc[:, iS]
+        # Allocate log_pdf array
+        log_pdf = np.empty_like(Mu)
 
-            # Compute the standardized variable (z)
-            z = (x - Mu[:, iS]) / Sgm[:, iS]
-            if np.any(1 + Xi[:, iS] * z <= 0):
-                return np.inf, tNll  # Invalid parameters (domain constraint violated)
+        # Case 1: xi ≈ 0 (Gumbel limit)
+        if np.any(small_xi_mask):
+            z_g = z[small_xi_mask]
+            s_g = Sgm[small_xi_mask]
+            log_pdf[small_xi_mask] = -np.log(s_g) - z_g - np.exp(-z_g)
 
-            # Compute the log-likelihood for GEV
-            if np.abs(Xi[:, iS]).max() < 1e-6:  # Limiting case as xi -> 0 (Gumbel)
-                log_pdf = -np.log(Sgm[:, iS]) - z - np.exp(-z)
-            else:  # General case for xi != 0
-                t = 1 + Xi[:, iS] * z
-                log_pdf = (
-                    -np.log(Sgm[:, iS])
-                    - (1 / Xi[:, iS] + 1) * np.log1p(Xi[:, iS] * z)
-                    - t**(-1 / Xi[:, iS])
-                )
+        # Case 2: xi != 0
+        if np.any(~small_xi_mask):
+            z_n = z[~small_xi_mask]
+            s_n = Sgm[~small_xi_mask]
+            x_n = Xi[~small_xi_mask]
+            log_pdf[~small_xi_mask] = (
+                -np.log(s_n)
+                - (1 / x_n + 1) * np.log1p(x_n * z_n)
+                - (1 + x_n * z_n) ** (-1 / x_n)
+            )
 
-            # Accumulate the negative log-likelihood
-            tNll[iS] = -1 * np.sum(log_pdf)
+        # Negative log-likelihood
+        tNll = -np.sum(log_pdf, axis=0, keepdims=True)
+        total_nll = np.sum(tNll)
 
-        return np.sum(tNll), tNll
+        if return_pointwise:
+            return total_nll, tNll, log_pdf
+        else:
+            return total_nll, tNll
 
     
+    # def log_prior(self, params, time_steps):
+    #     """
+    #     This function provides prior constraints on estimated parameters.
+
+    #     Input (list, list): params which is a list of estimates for the three gev parameters. time_steps is an array of points from 0,1 which is the length of the data.
+
+    #     Output (float): Will return either 0 or -inf depending on the input parameters.
+    #     """
+
+    #     # if ACC model, we assign prior to c
+    #     if self.param_structure[3] == 1:
+
+    #         c_vec = [params[2], params[4], params[6]]
+
+    #         if (min(c_vec) <= -0.5 or max(c_vec) >= 10):
+    #             return -np.inf
+
+    #     Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)
+
+    #     for iS in range(3):
+            
+    #         t0=(1+Xi[:, iS]*(self.data.iloc[:, iS] - Mu[:, iS])/Sgm[:, iS])
+
+    #         if (min(Sgm[:, iS]) <= 0) or (min(Xi[:, iS]) <= -1) or (max(Xi[:, iS]) > 0.2) or (min(t0) < 0):
+    #             return -np.inf
+    #     return 0
+
     def log_prior(self, params, time_steps):
         """
-        This function provides prior constraints on estimated parameters.
-
-        Input (list, list): params which is a list of estimates for the three gev parameters. time_steps is an array of points from 0,1 which is the length of the data.
-
-        Output (float): Will return either 0 or -inf depending on the input parameters.
+        Vectorized prior constraints for GEV parameters.
+        Much faster than the looped version.
         """
-
-        # m_0, m_11, m_21, m_31, s_0, s_11, s_21, s_31, x_0, x_11, x_21, x_31 = params
-
-        Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)
-
-        for iS in range(3):
-            
-            t0=(1+Xi[:, iS]*(self.data.iloc[:, iS] - Mu[:, iS])/Sgm[:, iS])
-
-            if (min(Sgm[:, iS]) <= 0) or (min(Xi[:, iS]) <= -1) or (max(Xi[:, iS]) > 0.2) or (min(t0) < 0):
+        # Check for sigmoid-type model constraint
+        if self.param_structure[3] == 1:
+            # Just check c parameters directly
+            c_vec = np.array([params[2], params[4], params[6]])
+            if np.any((c_vec <= -0.5) | (c_vec >= 10)):
                 return -np.inf
+
+        # Build parameter arrays (nT x 3)
+        Mu, Sgm, Xi = self.build_parameter_arrays(params, time_steps)
+        data_np = self.data.values  # (nT x 3)
+
+        t0 = 1 + Xi * (data_np - Mu) / Sgm
+
+        invalid_mask = (
+            (Sgm <= 0) |        # invalid scale
+            (Xi <= -1) |        # too negative shape
+            (Xi > 0.2) |        # too large shape
+            (t0 <= 0)           # domain constraint violated
+        )
+
+        # If any invalid parameter across any site, reject
+        if np.any(invalid_mask):
+            return -np.inf
+
+        # Otherwise valid prior
         return 0
-            
     
     def propose(
-        self, params, iteration, beta, total_accepted, samples, burn_in, time_steps
+        self, params, iteration, beta, total_accepted, burn_in
     ):
         # Make sure the total_accepted array has float values
-        # accepted_chain = np.array(total_accepted.iloc[max(0, iteration-999):, :], dtype=float)
         accepted_chain = np.array(total_accepted.iloc[max(0, len(total_accepted)-1000):, :], dtype=float)
 
 
@@ -222,7 +354,7 @@ class GevMCMC:
         )
 
         return np.exp(log_ratio), log_likelihood_old, tNll_old
-
+    
     def metropolis_hastings(
         self, n_samples, n2plt, burn_in=1000, thinning=10, beta=0.5, NGTSTR=0.1
     ):
@@ -281,9 +413,7 @@ class GevMCMC:
                     i,
                     beta,
                     total_accepted,
-                    samples,
                     burn_in,
-                    time_steps,
                 )
                 
                 acceptance_probability, nll, tNll = self.acceptance_prob(
@@ -348,7 +478,7 @@ class GevMCMC:
 
         beta = (np.sqrt(6) * np.std(combined_data)) / np.pi
         mu = np.mean(combined_data)
-        xi = 0
+        xi = 0.2
 
         PrmCns=np.zeros(self.nPrm)
 
@@ -364,9 +494,9 @@ class GevMCMC:
             # Assign zeros for linear and quadratic terms across 3 scenarios
             for degree in range(1, param_type + 1):  # Iterate over linear and quadratic terms
                 for _ in range(3):  # Three scenarios for each degree
-                    PrmCns[param_idx] = 0  # Initialize higher-order terms to zero
+                    PrmCns[param_idx] = 0  # Initialise higher-order terms to zero
                     param_idx += 1
-        
+
         return PrmCns
 
     def percent_point(self, q, c, mu, scale):
@@ -401,6 +531,7 @@ class GevMCMC:
             return mu + (scale / c) * ((-np.log(q)) ** (-c) - 1)
     
     def plot_return_values(self, samples):
+
         RtrPrd = 100
         n_samples = len(samples)
 
@@ -432,14 +563,28 @@ class GevMCMC:
         for iS in range(3):
 
             for param in ["Mu", "Sgm", "Xi"]:
+
+                param_idx = ["Mu", "Sgm", "Xi"].index(param)
+                deg = self.param_structure[param_idx]
+
                 terms = {
                     "C": samples.iloc[:, indices[param]],  # Constant term
-                    "L": samples.iloc[:, indices[param] + iS + 1] if self.param_structure[["Mu", "Sgm", "Xi"].index(param)] >= 1 else 0, # Linear term
-                    "Q": samples.iloc[:, indices[param] + 4 + iS] if self.param_structure[["Mu", "Sgm", "Xi"].index(param)] >= 2 else 0, # Quadratic term
+                    "L": samples.iloc[:, indices[param] + deg*iS + 1] if self.param_structure[["Mu", "Sgm", "Xi"].index(param)] >= 1 else 0, # Linear term
+                    "Q": samples.iloc[:, indices[param] + deg*iS + 2] if self.param_structure[["Mu", "Sgm", "Xi"].index(param)] >= 2 else 0, # Quadratic term
                 }
+                
+                if (self.param_structure[3] == 1) & (param == "Mu"):
+                    a = terms["C"]
+                    b = terms["L"]
+                    c = terms["Q"]
 
-                start_params[param][:, iS] = terms["C"] + terms["L"] * t_start + terms["Q"] * t_start**2
-                end_params[param][:, iS] = terms["C"] + terms["L"] * t_end + terms["Q"] * t_end**2
+                    start_params[param][:, iS] = self.sigmoid_mu(t_start, a, b, c)
+                    end_params[param][:, iS] = self.sigmoid_mu(t_end, a, b, c)
+                
+                else:
+
+                    start_params[param][:, iS] = terms["C"] + terms["L"] * t_start + terms["Q"] * t_start**2
+                    end_params[param][:, iS] = terms["C"] + terms["L"] * t_end + terms["Q"] * t_end**2
             
             RV_Start[:, iS] = self.percent_point(
                 1 - 1 / RtrPrd, 
