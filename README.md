@@ -1,4 +1,12 @@
-# Coupled Extreme Value Model For GCM Temperatures
+# Coupled extreme value model for gcm temperatures
+
+**Repo overview**
+
+**Repository folder structure**
+
+**Data structure**
+
+
 
 ## Downloaded Data
 - [X] UKESM1-0-LL - [1, 2, 3, 4, 8] (note this will include f2 as there is not option for f1)
